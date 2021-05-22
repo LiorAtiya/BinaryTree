@@ -51,7 +51,49 @@ namespace ariel {
         return *this;
     }
 
+    template<typename T>
+    void printBT(const string& prefix, Node<T>& node, bool isLeft)
+    {
+        if( node != nullptr )
+        {
+            cout << prefix;
+            cout << (isLeft ? "├──" : "└──" );
+
+            // print the value of the node
+            cout << node.value << std::endl;
+
+            // enter the next tree level - left and right branch
+            printBT( prefix + (isLeft ? "│   " : "    "), node.left, true);
+            printBT( prefix + (isLeft ? "│   " : "    "), node.right, false);
+        }
+    }
+
+    template<typename T>
+    void printBT(const string& prefix, Node<T>* node, bool isLeft)
+    {
+        if( node != nullptr )
+        {
+            cout << prefix;
+            cout << (isLeft ? "├──" : "└──" );
+
+            // print the value of the node
+            cout << node->value << std::endl;
+
+            // enter the next tree level - left and right branch
+            printBT( prefix + (isLeft ? "│   " : "    "), node->right, true);
+            printBT( prefix + (isLeft ? "│   " : "    "), node->left, false);
+        }
+    }
+
+    template<typename T>
+    ostream& operator<< (ostream& os,BinaryTree<T>& b){
+        printBT("", &b.root, false);
+        return os;
+    }
+
+    template ostream& operator<< (ostream& os,BinaryTree<int>& b);
     template class BinaryTree<int>;
     template class BinaryTree<string>;
+
 }
 

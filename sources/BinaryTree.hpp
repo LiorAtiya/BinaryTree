@@ -12,6 +12,7 @@ namespace ariel {
             Node<T>* right;
             Node<T>* left;
             Node():right(NULL),left(NULL) {}
+            ~Node() { delete left; delete right; }
     };  
 
     template<typename T> 
@@ -24,7 +25,6 @@ namespace ariel {
 
             Node<T> root;
 
-            // BinaryTree():root(nullptr){} 
             BinaryTree<T>& add_root(T root);
             BinaryTree<T>& add_left(T exist, T value);
             BinaryTree<T>& add_right(T exist, T value);
@@ -51,6 +51,8 @@ namespace ariel {
             // Iterator& begin();
             // Iterator& end();
 
-            // friend ostream& operator<< (ostream& os,BinaryTree& b);
+            template<typename U>
+            friend ostream& operator<< (ostream& os,BinaryTree<U>& b);
+
     };
 }
