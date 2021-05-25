@@ -1,12 +1,10 @@
+/*
+    Author: Lior Atiya
+    Since: 2021-05
+*/
+
 #include "doctest.h"
-#include <iostream>
-#include <vector>
 #include <random>
-#include <ctime>
-#include <unistd.h>
-#include <stdlib.h>
-#include<time.h>
-#include <fstream>
 #include <sstream>
 
 using namespace std;

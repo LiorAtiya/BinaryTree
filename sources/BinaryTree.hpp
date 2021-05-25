@@ -1,3 +1,10 @@
+/**
+ * Implement generic Binary Tree
+ *
+ * @author Lior Atiya
+ * @since 2021-05
+ */
+
 #pragma once
 #include <string>
 #include <vector>
