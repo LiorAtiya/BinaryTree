@@ -233,7 +233,7 @@ TEST_CASE("In-order prints"){
     ostringstream actual;
     string expected = "";
 
-    for(int i= 0 ; i < 1000 ; i++){
+    for(int i= 0 ; i < 10 ; i++){
         BinaryTree<int> int_tree;
         int root = random_int();
         int root_left = random_int();
@@ -306,7 +306,7 @@ TEST_CASE("Post-order prints"){
     ostringstream actual;
     string expected = "";
 
-    for(int i= 0 ; i < 1000 ; i++){
+    for(int i= 0 ; i < 10 ; i++){
         BinaryTree<int> int_tree;
         int root = random_int();
         int root_left = random_int();
@@ -378,7 +378,7 @@ TEST_CASE("Checks Foreach"){
     ostringstream actual;
     string expected = "";
 
-    for(int i=0 ; i < 10000 ; i++){
+    for(int i=0 ; i < 10 ; i++){
         
         //------Integer-----------
         BinaryTree<int> int_tree;
@@ -470,7 +470,33 @@ TEST_CASE("Checks Foreach"){
     }
 }
 
-// TEST_CASE("Prints the shape of the tree"){
-    
-// }
+TEST_CASE("Prints the shape of the tree"){
+    ostringstream actual;
+    string expected = "";
+
+    //String
+    BinaryTree<string> string_tree;
+    string_tree.add_root("A")
+    .add_right("A","B")
+    .add_left("A", "C")
+    .add_right("C", "D")
+    .add_left("C", "E");
+
+    actual << string_tree;
+    expected = "└──A\n    ├──B\n    └──C\n        ├──D\n        └──E";
+    CHECK(actual.str() == expected);
+
+    //Integer
+    BinaryTree<int> int_tree;
+    string_tree.add_root("1")
+    .add_right("1","2")
+    .add_left("1", "3")
+    .add_right("3", "4")
+    .add_left("3", "5");
+
+    actual << string_tree;
+    string ac = actual.str();
+    expected = "└──1\n    ├──2\n    └──3\n        ├──4\n        └──5";
+    CHECK(actual.str() == expected);
+}
 

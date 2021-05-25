@@ -9,7 +9,6 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-#include <string>
 using namespace std;
 
 #include "BinaryTree.hpp"
@@ -25,16 +24,12 @@ int main() {
   .add_left(1, 2);     // Now 2 is the left child of 1, instead of 9 (the children of 9 remain in place)
 
   cout << tree_of_ints << endl;  /* Prints the tree in a reasonable format. For example:
-  //       1
-  //       |--------|
-  //       2        3
-  //       |---|
-  //       4   5
-  // */
-
-  // BinaryTree<string> string_tree;
-  // string_tree.add_root("Lior").add_left("Lior","David").add_right("Lior", "Atiya");
-  // cout << string_tree << endl;
+        1
+        |--------|
+        2        3
+        |---|
+        4   5
+  */
 
   for (auto it=tree_of_ints.begin_preorder(); it!=tree_of_ints.end_preorder(); ++it) {
     cout << (*it) << " " ;
@@ -60,7 +55,7 @@ int main() {
   .add_right("9", "5")     // Now 5 is the right child of 9
   .add_right("1", "3")     // Now 3 is the right child of 1
   .add_left("1", "2");     // Now 2 is the left child of 1, instead of 9 (the children of 9 remain in place)
-  // cout << tree_of_strings << endl; 
+  cout << tree_of_strings << endl; 
 
   for (auto it=tree_of_strings.begin_preorder(); it!=tree_of_strings.end_preorder(); ++it) {
     cout << (*it) << " " ;
