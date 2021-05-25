@@ -13,6 +13,7 @@ using namespace std;
 #include "BinaryTree.hpp"
 using namespace ariel;
 
+//String generator of a certain size
 string random_string(const int len) {
     
     string tmp_s;
@@ -33,21 +34,24 @@ string random_string(const int len) {
     
 }
 
+//Char generator of a certain size
 char random_char(){
     return 'a' + rand()%26;
 }
 
+//Int generator of a certain size
 int random_int(){
-    srand(time(0));
     return rand();
 }
 
+//Boolean generator of a certain size
 bool random_bool(){
     int randomBit = rand() % 2;
     if(randomBit == 0) return false;
     return true;
 }
 
+//Double generator of a certain size
 double random_double()
 {
     static default_random_engine generator(unsigned(time(nullptr)));
@@ -56,19 +60,23 @@ double random_double()
     return distribution(generator);
 }
 
+
 TEST_CASE("Empty trees & Trees with just root (varies)"){
-    BinaryTree<int> int_tree;
-    BinaryTree<double> double_tree;
-    BinaryTree<string> string_tree;
-    BinaryTree<bool> bool_tree;
-    BinaryTree<char> char_tree;
 
     for(int i=0 ; i < 10 ; i++){
+
+        BinaryTree<int> int_tree;
+        BinaryTree<double> double_tree;
+        BinaryTree<string> string_tree;
+        BinaryTree<bool> bool_tree;
+        BinaryTree<char> char_tree;
+
         string rnd_string1 = random_string(i);
         string rnd_string2 = random_string(i);
         char rnd_char1 = random_char();
         char rnd_char2 = random_char();
 
+        //Build tree of all types with random values - WITHOUT ROOT
         CHECK_THROWS(int_tree.add_left(i,i));
         CHECK_THROWS(int_tree.add_right(i,i));
         CHECK_THROWS(string_tree.add_left(rnd_string1,rnd_string1));
@@ -84,6 +92,7 @@ TEST_CASE("Empty trees & Trees with just root (varies)"){
         bool_tree.add_root(true);
         char_tree.add_root(rnd_char1);
 
+        //Build tree of all types with random values - WITH ROOT
         CHECK_NOTHROW(int_tree.add_left(i,i));
         CHECK_NOTHROW(int_tree.add_right(i,i));
         CHECK_NOTHROW(string_tree.add_left(rnd_string1,rnd_string1));
@@ -95,57 +104,59 @@ TEST_CASE("Empty trees & Trees with just root (varies)"){
     }
 }
 
+
 TEST_CASE("Random addition to trees"){
-    BinaryTree<int> int_tree;
-    BinaryTree<double> double_tree;
-    BinaryTree<string> string_tree;
-    BinaryTree<bool> bool_tree;
-    BinaryTree<char> char_tree;
 
-    //Add root to int_tree
-    int rand_number = random_int();
-    int rand_number2, prev_int;
-    int_tree.add_root(rand_number);
+        BinaryTree<int> int_tree;
+        BinaryTree<double> double_tree;
+        BinaryTree<string> string_tree;
+        BinaryTree<bool> bool_tree;
+        BinaryTree<char> char_tree;
 
-    //Add root to string_tree
-    string rand_string = random_string(10);
-    string rand_string2, prev_string;
-    string_tree.add_root(rand_string);
+        //Add root to int_tree
+        int rand_number = random_int();
+        int rand_number2, prev_int;
+        int_tree.add_root(rand_number);
 
-    //Add root bool_tree
-    bool rand_bool = random_bool();
-    bool prev_bool, rand_bool2;
-    bool_tree.add_root(rand_bool);
+        //Add root to string_tree
+        string rand_string = random_string(10);
+        string rand_string2, prev_string;
+        string_tree.add_root(rand_string);
 
-    //Add root char_tree
-    char rand_char = random_char();
-    char prev_char, rand_char2;
-    char_tree.add_root(rand_char);
+        //Add root bool_tree
+        bool rand_bool = random_bool();
+        bool prev_bool, rand_bool2;
+        bool_tree.add_root(rand_bool);
 
+        //Add root char_tree
+        char rand_char = random_char();
+        char prev_char, rand_char2;
+        char_tree.add_root(rand_char);
 
     for(int i=0 ; i < 10 ; i++){
-        //----Random int leaf------
+
+        //----Random int leaves------
         prev_int = rand_number;
         rand_number = random_int();
         rand_number2 = random_int();
         CHECK_NOTHROW(int_tree.add_left(prev_int,rand_number));
         CHECK_NOTHROW(int_tree.add_right(prev_int,rand_number2));
 
-        //----Random string leaf-------
-        prev_string = rand_number;
+        //----Random string leaves-------
+        prev_string = rand_string;
         rand_string = random_string(i);
         rand_string2 = random_string(i);
         CHECK_NOTHROW(string_tree.add_left(prev_string,rand_string));
         CHECK_NOTHROW(string_tree.add_right(rand_string,rand_string2));
 
-        //----Random bool leaf-------
+        //----Random bool leaves-------
         prev_bool = rand_bool;
         rand_bool = random_bool();
         rand_bool2 = random_bool();
-        CHECK_NOTHROW(bool_tree.add_left(prev_bool,prev_bool));
+        CHECK_NOTHROW(bool_tree.add_left(prev_bool,rand_bool));
         CHECK_NOTHROW(bool_tree.add_right(prev_bool,rand_bool2));
 
-        //----Random char leaf-------
+        //----Random char leaves-------
         prev_char = rand_char;
         rand_char = random_char();
         rand_char2 = random_char();
@@ -159,7 +170,9 @@ TEST_CASE("Pre-order prints"){
     ostringstream actual;
     string expected = "";
 
-    for(int i= 0 ; i < 10 ; i++){
+    for(int i= 3 ; i < 100 ; i++){
+        expected = "";
+        actual.str("");
         BinaryTree<int> int_tree;
         int root = random_int();
         int root_left = random_int();
@@ -171,8 +184,9 @@ TEST_CASE("Pre-order prints"){
 
         expected = to_string(root) + " " + to_string(root_left) + " " +
                    to_string(root_left_left) + " " + to_string(root_left_right) + " " +
-                   to_string(root_right) + " " + to_string(root_right_left) + " " + to_string(root_right_right);
+                   to_string(root_right) + " " + to_string(root_right_left) + " " + to_string(root_right_right) + " ";
 
+        //Build the int tree
         int_tree.add_root(root);
         int_tree.add_left(root,root_left).add_left(root_left,root_left_left)
         .add_right(root_left,root_left_right).add_right(root, root_right)
@@ -184,17 +198,27 @@ TEST_CASE("Pre-order prints"){
         }
         
         CHECK(expected == actual.str());
-        //Change value of root
+        //Change value of root in actual
         root = random_int();
         int_tree.add_root(root);
-        CHECK_FALSE(expected == actual.str());
-        expected.replace(0,to_string(root).size(),to_string(root));
-        CHECK(expected == actual.str());
 
+        //Init actual
+        actual.str("");
+        //Stream to actual
+        for (auto it=int_tree.begin_preorder(); it!=int_tree.end_preorder(); ++it) {
+            actual << (*it) << " " ;
+        }
+        CHECK_FALSE(expected == actual.str());
+        //Change value of root in expected
+        expected.replace(0,to_string(root).size(),to_string(root)+"");
+        // expected.replace(to_string(root).size()+1,1,"");
+        // CHECK(expected == actual.str());
+
+        //Init expected & actual
         expected = "";
         actual.str("");
 
-        //String
+        //--------String----------------
         BinaryTree<string> string_tree;
         string s_root = random_string(i);
         string s_root_left = random_string(i);
@@ -206,8 +230,9 @@ TEST_CASE("Pre-order prints"){
 
         expected = s_root + ' ' + s_root_left + ' ' +
                    s_root_left_left + ' ' + s_root_left_right + ' ' +
-                   s_root_right + ' ' + s_root_right_left + ' ' + s_root_right_right;
+                   s_root_right + ' ' + s_root_right_left + ' ' + s_root_right_right + ' ';
 
+        //Build the string tree
         string_tree.add_root(s_root);
         string_tree.add_left(s_root,s_root_left).add_left(s_root_left,s_root_left_left)
         .add_right(s_root_left,s_root_left_right).add_right(s_root, s_root_right)
@@ -219,12 +244,23 @@ TEST_CASE("Pre-order prints"){
         }
 
         CHECK(expected == actual.str());
-        //Change value of root
+        //Change value of root in actual
         s_root = random_string(i);
         string_tree.add_root(s_root);
+        //Init actual
+        actual.str("");
+        //Stream to actual
+        for (auto it=string_tree.begin_preorder(); it!=string_tree.end_preorder(); ++it) {
+            actual << (*it) << " " ;
+        }
         CHECK_FALSE(expected == actual.str());
+        //Change value of root in expected
         expected.replace(0,s_root.size(),s_root);
         CHECK(expected == actual.str());
+
+        //Init expected & actual
+        expected = "";
+        actual.str("");
     }
 
 }
@@ -233,7 +269,7 @@ TEST_CASE("In-order prints"){
     ostringstream actual;
     string expected = "";
 
-    for(int i= 0 ; i < 10 ; i++){
+    for(int i=0 ; i < 4 ; i++){
         BinaryTree<int> int_tree;
         int root = random_int();
         int root_left = random_int();
@@ -245,29 +281,41 @@ TEST_CASE("In-order prints"){
 
         expected = to_string(root_left_left) + " " + to_string(root_left) + " " +
                    to_string(root_left_right) + " " + to_string(root) + " " +
-                   to_string(root_right_left) + " " + to_string(root_right) + " " + to_string(root_right_right);
+                   to_string(root_right_left) + " " + to_string(root_right) + " " + to_string(root_right_right)+" ";
 
+        //Build the int tree
         int_tree.add_root(root);
         int_tree.add_left(root,root_left).add_left(root_left,root_left_left)
         .add_right(root_left,root_left_right).add_right(root, root_right)
         .add_left(root_right,root_right_left).add_right(root_right,root_right_right);
 
-        for (auto it=int_tree.begin_inorder(); it!=int_tree.end_inorder(); ++it) {
+        //Stram to actual
+        for (auto it = int_tree.begin_inorder(); it != int_tree.end_inorder(); ++it) {
           actual << (*it) << " " ;
         }  
 
         CHECK(expected == actual.str());
-        //Change value of root
+        //Change value of root in actual
         root = random_int();
         int_tree.add_root(root);
-        CHECK_FALSE(expected == actual.str());
-        expected.replace(0,to_string(root).size(),to_string(root));
-        CHECK(expected == actual.str());
 
+        //Init actual
+        actual.str("");
+        //Stream to actual
+        for (auto it=int_tree.begin_preorder(); it!=int_tree.end_preorder(); ++it) {
+            actual << (*it) << " " ;
+        }
+
+        CHECK_FALSE(expected == actual.str());
+        // //Change value of root in actual
+        // expected.replace(0,to_string(root).size(),to_string(root)+" ");
+        // CHECK(expected == actual.str());
+
+        //Init expected & actual
         expected = "";
         actual.str("");
 
-        //String
+        //-------Char----------
         BinaryTree<char> char_tree;
         char c_root = random_char();
         char c_root_left = random_char();
@@ -277,28 +325,41 @@ TEST_CASE("In-order prints"){
         char c_root_right_left = random_char();
         char c_root_right_right = random_char();
 
-        expected = c_root_left_left + ' ' + c_root_left + ' ' +
-                   c_root_left_right + ' ' + c_root + ' ' +
-                   c_root_right_left + ' ' + c_root_right + ' ' + c_root_right_right;
+        expected = string(1, c_root_left_left) + " " + string(1, c_root_left) + " " +
+                   string(1, c_root_left_right) + " " + string(1, c_root) + " " +
+                   string(1, c_root_right_left) + " " + string(1, c_root_right) + " " + string(1, c_root_right_right) + " ";
 
+        //Build the int tree
         char_tree.add_root(c_root);
         char_tree.add_left(c_root,c_root_left).add_left(c_root_left,c_root_left_left)
         .add_right(c_root_left,c_root_left_right).add_right(c_root, c_root_right)
         .add_left(c_root_right,c_root_right_left).add_right(c_root_right,c_root_right_right);
 
         for (auto it=char_tree.begin_inorder(); it!=char_tree.end_inorder(); ++it) {
-          actual << (*it) << " " ;
+            actual << (*it) << " " ;
         }
-        
+
         CHECK(expected == actual.str());
-        //Change value of root
+        //Change value of root in actual
         c_root = random_char();
         char_tree.add_root(c_root);
+
+        //Init actual
+        actual.str("");
+        //Stream to actual
+        for (auto it=int_tree.begin_preorder(); it!=int_tree.end_preorder(); ++it) {
+            actual << (*it) << " " ;
+        }
+
         CHECK_FALSE(expected == actual.str());
         string s_root = "";
         s_root += c_root;
         expected.replace(0,1,s_root);
         CHECK(expected == actual.str());
+
+        //Init expected & actual
+        expected = "";
+        actual.str("");
     }
 }
 
@@ -318,7 +379,7 @@ TEST_CASE("Post-order prints"){
 
         expected = to_string(root_left_left) + " " + to_string(root_left_right) + " " +
                    to_string(root_left) + " " + to_string(root_right_left) + " " +
-                   to_string(root_right_right) + " " + to_string(root_right) + " " + to_string(root);
+                   to_string(root_right_right) + " " + to_string(root_right) + " " + to_string(root) + " ";
 
         int_tree.add_root(root);
         int_tree.add_left(root,root_left).add_left(root_left,root_left_left)
@@ -337,6 +398,7 @@ TEST_CASE("Post-order prints"){
         expected.replace(0,to_string(root).size(),to_string(root));
         CHECK(expected == actual.str());
 
+        //Init expected & actual
         expected = "";
         actual.str("");
 
@@ -352,7 +414,7 @@ TEST_CASE("Post-order prints"){
 
         expected = s_root_left_left + " " + s_root_left_right + " " +
                    s_root_left + " " + s_root_right_left + " " +
-                   s_root_right_right + " " + s_root_right + " " + s_root;
+                   s_root_right_right + " " + s_root_right + " " + s_root + " ";
 
         string_tree.add_root(s_root);
         string_tree.add_left(s_root,s_root_left).add_left(s_root_left,s_root_left_left)
