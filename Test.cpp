@@ -19,10 +19,6 @@ string random_string(const int len) {
         "0123456789"
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz";
-    
-    // srand( (unsigned) time(NULL) * getpid());
-
-    tmp_s.reserve((unsigned long)len);
 
     for (int i = 0; i < len; ++i) 
         tmp_s += alphanum[(unsigned long)rand() % (sizeof(alphanum) - 1)];
@@ -64,7 +60,6 @@ TEST_CASE("Empty trees & Trees with just root (varies)"){
     for(int i=0 ; i < 10 ; i++){
 
         BinaryTree<int> int_tree;
-        BinaryTree<double> double_tree;
         BinaryTree<string> string_tree;
         BinaryTree<bool> bool_tree;
         BinaryTree<char> char_tree;
@@ -169,8 +164,7 @@ TEST_CASE("Pre-order prints"){
     string expected = "";
 
     for(int i= 3 ; i < 100 ; i++){
-        expected = "";
-        actual.str("");
+
         BinaryTree<int> int_tree;
         int root = random_int();
         int root_left = random_int();
@@ -209,8 +203,7 @@ TEST_CASE("Pre-order prints"){
         CHECK_FALSE(expected == actual.str());
         //Change value of root in expected
         expected.replace(0,to_string(root).size(),to_string(root)+"");
-        // expected.replace(to_string(root).size()+1,1,"");
-        // CHECK(expected == actual.str());
+        CHECK(expected == actual.str());
 
         //Init expected & actual
         expected = "";
@@ -305,9 +298,9 @@ TEST_CASE("In-order prints"){
         }
 
         CHECK_FALSE(expected == actual.str());
-        // //Change value of root in actual
-        // expected.replace(0,to_string(root).size(),to_string(root)+" ");
-        // CHECK(expected == actual.str());
+        //Change value of root in actual
+        expected.replace(0,to_string(root).size(),to_string(root)+" ");
+        CHECK(expected == actual.str());
 
         //Init expected & actual
         expected = "";
