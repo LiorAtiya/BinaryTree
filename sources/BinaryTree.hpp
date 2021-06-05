@@ -37,15 +37,15 @@ namespace ariel {
                 }
             }
 
-            void deep_copy(Node<T> &target, const Node<T> &source) {
-                if (source.left != nullptr) {
-                    target.left = new Node<T>(source.left->value);
-                    deep_copy(*target.left, *source.left);
+            void deep_copy(Node<T> &this_tree, const Node<T> &other_tree) {
+                if (other_tree.left != nullptr) {
+                    this_tree.left = new Node<T>(other_tree.left->value);
+                    deep_copy(*this_tree.left, *other_tree.left);
                 }
 
-                if (source.right != nullptr) {
-                    target.right = new Node<T>(source.right->value);
-                    deep_copy(*target.right, *source.right);
+                if (other_tree.right != nullptr) {
+                    this_tree.right = new Node<T>(other_tree.right->value);
+                    deep_copy(*this_tree.right, *other_tree.right);
                 }
             }
 
@@ -105,7 +105,6 @@ namespace ariel {
                 }else{
                     n->left->value = child;
                 }
-                // n->left->value = child;
                 return *this;
             }
 
@@ -119,7 +118,6 @@ namespace ariel {
                 }else{
                     n->right->value = child;
                 }
-                // n->right->value = child;
                 return *this;
             }
 
