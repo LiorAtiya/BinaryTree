@@ -242,7 +242,8 @@ namespace ariel {
             }
 
             //Print the tree
-            static void printBT(const string& prefix, Node<T>* node, bool isLeft)
+            //**Taken from StackOverflow**
+            static void printTree(const string& prefix, Node<T>* node, bool isLeft)
             {
                 if( node != nullptr )
                 {
@@ -279,7 +280,7 @@ namespace ariel {
             }
 
             friend ostream& operator<< (ostream& os,BinaryTree<T> const& b){
-                BinaryTree<T>::printBT("", b.root, false);
+                BinaryTree<T>::printTree("", b.root, false);
                 return os;
             }
 
